@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f2e8">
-  <meta name="description" content="在纸板商业街上划出一笔，让保龄球招牌砸穿街两边的四间店铺。">
+  <meta name="description" content="在纸板商业街上划出一笔，用真实刚体物理让保龄球招牌砸穿街两边的四间店铺。">
   <link rel="icon" href="data:,">
   <title>一笔打烊 · 保龄球馆的最后一单</title>
   <!-- inline:style -->
@@ -13,10 +13,12 @@
   <main class="game" data-phase="ready">
     <header class="masthead">
       <h1><span class="cut-mark" aria-hidden="true"></span>一笔打烊</h1>
-      <button class="sound" type="button" data-sound aria-pressed="false">
-        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
-        音效<span data-sound-state>关</span>
-      </button>
+      <div class="header-actions">
+        <button class="sound" type="button" data-sound aria-pressed="false">
+          <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+          音效<span data-sound-state>关</span>
+        </button>
+      </div>
     </header>
     <section class="play" aria-labelledby="level-title">
       <header class="level-head">
@@ -26,7 +28,9 @@
           <div><dt>已拆房间</dt><dd><b data-cleared>0</b><small> / 4</small></dd></div>
         </dl>
       </header>
-      <div class="street-field"><!-- inline:scene --></div>
+      <div class="street-field">
+        <canvas data-board width="600" height="328" role="img" aria-label="保龄球馆的最后一单：在纸板商业街上拖出一条直线，切断卡扣或楼块，拆除四间亮窗房。"></canvas>
+      </div>
       <div class="action-row">
         <p data-outcome role="status" aria-live="polite">划过圆扣或亮窗，松手拆除。</p>
         <button type="button" class="reset" data-reset disabled>重画</button>
@@ -34,11 +38,14 @@
     </section>
     <footer>
       <div class="legend" aria-label="图例"><span><i class="rivet"></i>可拆卡扣</span><span><i class="windows"></i>亮窗房间</span></div>
-      <details><summary>按键划线</summary><div class="choices">
-        <button type="button" data-trial="left">划左扣</button><button type="button" data-trial="right">划右扣</button><button type="button" data-trial="both">同时划两扣</button>
-      </div></details>
+      <div class="footer-tools">
+        <button type="button" class="debug-toggle" data-debug aria-pressed="false">物理调试</button>
+        <details><summary>按键划线</summary><div class="choices">
+          <button type="button" data-trial="left">划左扣</button><button type="button" data-trial="right">划右扣</button><button type="button" data-trial="both">同时划两扣</button>
+        </div></details>
+      </div>
     </footer>
-    <noscript>请在浏览器中开启 JavaScript 以绘制拆迁线。</noscript>
+    <noscript>请在浏览器中开启 JavaScript 以运行物理模拟并绘制拆迁线。</noscript>
   </main>
   <!-- inline:game -->
 </body>
