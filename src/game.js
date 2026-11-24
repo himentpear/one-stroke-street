@@ -66,7 +66,8 @@ function animate(now) {
 }
 function submit(stroke) {
   view.clearStroke();
-  if (!applyCut(state, hitTest(stroke))) {
+  const hits = hitTest(stroke);
+  if (!applyCut(state, hits)) {
     status.textContent = '划空了，仍有一笔。试着穿过圆扣或亮窗。';
     return;
   }
@@ -75,7 +76,7 @@ function submit(stroke) {
   remaining.textContent = '0';
   root.dataset.phase = 'moving';
   status.textContent = '已落笔，看看球会滚向哪里。';
-  sound({ type: 'cut' });
+  if (hits.pins.some(Boolean)) sound({ type: 'cut' });
   consumeEvents(!reducedMotion.matches);
   if (reducedMotion.matches) {
     while (state.phase === 'moving') step(false);
