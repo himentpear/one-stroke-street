@@ -1,0 +1,19 @@
+{
+  "name": "one-stroke-street",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.18.0 <23" },
+  "packageManager": "npm@11.7.0",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/serve.mjs --preview",
+    "setup:browsers": "playwright install chromium webkit",
+    "test": "npm run build && playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "esbuild": "0.28.2"
+  }
+}

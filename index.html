@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f2e8">
+  <meta name="description" content="在纸板商业街上划出一笔，让保龄球招牌砸穿街两边的四间店铺。">
+  <link rel="icon" href="data:,">
+  <title>一笔打烊 · 保龄球馆的最后一单</title>
+  <style>
+:root {
+  color-scheme: light;
+  --paper: #f7f2e8; --ink: #252724; --target: #2168a3; --pin-ink: #bc491b;
+  --wash: #efeade; --fine: #d8d3c7; --edge: #a6a296; --dark-edge: #575851;
+  --window-face: #d9e5e6; --pin-face: #f8d3b4;
+  font-family: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink); background: var(--paper);
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; min-height: 100svh; background: repeating-linear-gradient(0deg, transparent 0 5px, #25272403 5px 6px); }
+button, summary { font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button { border: 1px solid var(--ink); border-radius: 5px; color: var(--ink); background: var(--paper); }
+button:disabled { cursor: default; }
+button:focus-visible, summary:focus-visible { outline: 3px solid var(--target); outline-offset: 3px; }
+.game { width: min(100%, 1080px); margin: 0 auto; padding: max(18px, env(safe-area-inset-top)) max(clamp(12px, 4vw, 48px), env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(clamp(12px, 4vw, 48px), env(safe-area-inset-left)); }
+.masthead { display: flex; justify-content: space-between; align-items: center; padding: 0 0 clamp(13px, 2.5vh, 24px); border-bottom: 3px solid var(--ink); }
+h1, h2, p, dl, dd { margin: 0; }
+h1 { display: flex; align-items: center; gap: .45em; font-size: clamp(1.7rem, 4vw, 3rem); letter-spacing: -.065em; font-weight: 900; line-height: 1.15; }
+.cut-mark { display: inline-block; width: .9em; height: .86em; position: relative; transform: rotate(-9deg); background: var(--pin-ink); clip-path: polygon(0 12%, 100% 0, 92% 38%, 20% 77%, 88% 49%, 83% 86%, 1% 100%); }
+.sound { display: inline-flex; align-items: center; gap: .4em; padding: .45em .8em; min-height: 44px; font-size: .93rem; }
+.sound[aria-pressed="true"] { color: var(--paper); background: var(--ink); }
+.sound-bars { display: inline-flex; align-items: center; gap: 2px; height: 14px; }
+.sound-bars i { width: 2px; height: 6px; background: currentColor; }
+.sound-bars i:nth-child(2) { height: 14px; }
+.sound-bars i:nth-child(3) { height: 10px; }
+.level-head { display: flex; align-items: center; gap: 18px; justify-content: space-between; padding: clamp(17px, 3vh, 32px) 0; }
+h2 { font-size: clamp(1.35rem, 3.25vw, 2.45rem); line-height: 1.2; letter-spacing: -.04em; font-weight: 850; }
+.level-head p { margin-top: .45em; color: var(--dark-edge); font-size: 1rem; }
+.scoreboard { display: flex; gap: clamp(15px, 3.4vw, 45px); flex-shrink: 0; }
+.scoreboard div { border-left: 2px solid var(--edge); padding-left: clamp(8px, 1.3vw, 16px); }
+.scoreboard dt { font-size: .88rem; color: var(--dark-edge); }
+.scoreboard dd { font-variant-numeric: tabular-nums; line-height: 1.1; }
+.scoreboard b { font-size: clamp(1.6rem, 3.4vw, 2.55rem); }
+.scoreboard small { font-size: 1rem; color: var(--dark-edge); }
+.street-field { width: 100%; height: min(53svh, 52vw, 534px); min-height: 155px; border: 1.5px solid var(--ink); border-radius: 3px 3px 0 0; background-color: var(--paper); background-image: radial-gradient(#57585130 .7px, transparent .8px); background-size: 14px 14px; }
+[data-board] { display: block; width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-user-select: none; cursor: crosshair; }
+[data-world] { pointer-events: none; }
+[data-phase="moving"] [data-board], [data-phase="done"] [data-board] { cursor: default; }
+.stroke-hit { --window-face: var(--pin-face); --target: var(--pin-ink); filter: drop-shadow(0 0 2px var(--pin-ink)); }
+.impact-ring { fill: none; stroke: var(--target); stroke-width: 2; }
+.shard { fill: var(--target); }
+.shard.large { fill: var(--window-face); stroke: var(--target); }
+.action-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1.5px solid var(--ink); border-top: 0; border-radius: 0 0 3px 3px; padding: 10px clamp(10px, 2vw, 20px); background: #fff9ed; }
+[data-outcome] { font-size: 1rem; line-height: 1.5; font-weight: 550; }
+.reset { flex: none; min-width: 84px; min-height: 44px; padding: .45em 1em; font-weight: 750; color: var(--paper); background: var(--pin-ink); border-color: var(--pin-ink); }
+.reset:disabled { background: var(--wash); color: var(--dark-edge); border-color: var(--edge); }
+footer { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: .5rem 1rem; margin-top: 8px; }
+.legend { display: flex; gap: 1.15rem; color: var(--dark-edge); }
+.legend span, summary, .choices button { font-size: .9rem; }
+.legend span { display: inline-flex; align-items: center; gap: .42rem; }
+.rivet { width: 13px; height: 13px; border: 2px solid var(--pin-ink); border-radius: 50%; background: radial-gradient(var(--pin-ink) 30%, var(--pin-face) 35%); }
+.windows { width: 17px; height: 12px; background: repeating-linear-gradient(90deg, var(--target) 0 4px, transparent 4px 6px); }
+summary { min-height: 44px; padding: 11px 0; color: var(--dark-edge); }
+.choices { display: flex; gap: .4rem; flex-wrap: wrap; }
+.choices button { min-height: 44px; padding: .4em .75em; }
+.choices button:disabled { color: var(--dark-edge); border-color: var(--edge); }
+@media (max-width: 620px) {
+  .level-head { flex-wrap: wrap; align-items: flex-start; gap: 14px; }
+  .scoreboard { gap: 1.25rem; }
+  .scoreboard div { display: flex; align-items: baseline; gap: .45rem; }
+  .scoreboard b { font-size: 1.4rem; }
+  .street-field { height: min(63vw, 335px); }
+  .reset { min-width: 64px; }
+}
+@media (max-height: 500px) and (min-width: 621px) {
+  .game { padding-top: 6px; }
+  .masthead, .level-head { padding-block: 5px; }
+  h1, h2 { font-size: 1.35rem; }
+  .street-field { height: 53svh; min-height: 110px; }
+}
+</style>
+</head>
+<body>
+  <main class="game" data-phase="ready">
+    <header class="masthead">
+      <h1><span class="cut-mark" aria-hidden="true"></span>一笔打烊</h1>
+      <button class="sound" type="button" data-sound aria-pressed="false">
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        音效<span data-sound-state>关</span>
+      </button>
+    </header>
+    <section class="play" aria-labelledby="level-title">
+      <header class="level-head">
+        <div><h2 id="level-title">保龄球馆的最后一单</h2><p>用一笔拆完街两边的四间亮房。</p></div>
+        <dl class="scoreboard">
+          <div><dt>剩余笔数</dt><dd><b data-strokes>1</b><small> 笔</small></dd></div>
+          <div><dt>已拆房间</dt><dd><b data-cleared>0</b><small> / 4</small></dd></div>
+        </dl>
+      </header>
+      <div class="street-field"><svg data-board viewBox="0 0 600 328" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="oss-title oss-desc">
+  <title id="oss-title">一笔拆掉街两边的四间亮窗房</title>
+  <desc id="oss-desc">左楼屋顶的保龄球招牌搁在双扣雨棚上。棚的右下方有两间亮窗房，下面是指向右方的弹板。街对面还有两间亮窗房。可以在图上拖线，或用下方按钮试划卡扣。</desc>
+  <defs>
+    <pattern id="oss-paper" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M-2 2L2-2 M0 8L8 0 M6 10L10 6" fill="none" stroke="var(--edge)" stroke-width=".8"/>
+    </pattern>
+    <g id="oss-room">
+      <path d="M-9 4L0 0V40L-9 34Z M0 0L8-6H75L68 0Z" fill="var(--wash)" stroke="var(--edge)" stroke-width="1.2"/>
+      <path d="M0 3L5 0H68V37L64 41H0Z" fill="var(--window-face)" stroke="var(--target)" stroke-width="1.5"/>
+      <path d="M0 36H68L64 41H0Z" fill="var(--target)"/>
+      <g fill="var(--target)">
+        <rect x="8" y="7" width="13" height="23" rx="1.5"/>
+        <rect x="27.5" y="7" width="13" height="23" rx="1.5"/>
+        <rect x="47" y="7" width="13" height="23" rx="1.5"/>
+      </g>
+      <path d="M8 17H21 M27.5 17H40.5 M47 17H60" fill="none" stroke="var(--window-face)" stroke-width="2"/>
+    </g>
+    <g id="oss-cornice">
+      <path d="M-39 1H39L35 9H-35Z" fill="var(--paper)" stroke="var(--dark-edge)" stroke-width="1.4"/>
+      <path d="M-32 1V-5H-16V-11H16V-5H32V1Z" fill="var(--wash)" stroke="var(--dark-edge)" stroke-width="1.4"/>
+      <path d="M-11-5H11 M-29 5H29" fill="none" stroke="var(--edge)" stroke-width="1.4"/>
+    </g>
+    <g id="oss-pin">
+      <circle r="10" fill="var(--pin-face)" stroke="var(--pin-ink)" stroke-width="2.5"/>
+      <circle r="4" fill="var(--pin-ink)"/>
+    </g>
+  </defs>
+  <g data-world>
+    <g fill="var(--wash)" stroke="var(--fine)" stroke-linejoin="round">
+      <path d="M12 309V254H25V248H48V239H65V309Z M292 309V276H311V264H341V309Z M344 309V244H352V237H375V244H388V309Z M548 309V258H566V251H579V272H591V309Z"/>
+      <path d="M53 309V112H66V103H96V89H180V244H189V309Z M417 309V277H427V268H525V277H535V309Z"/>
+    </g>
+    <g fill="none" stroke="var(--edge)" stroke-width="1.3" stroke-linejoin="round">
+      <path d="M52 111H96 M63 122H88V136H63Z M63 146H88V160H63Z M63 170H88V184H63Z M63 194H88V208H63Z"/>
+      <path d="M101 309V113H176V309 M107 113V309 M170 113V309 M68 236H93V309 M57 232H95"/>
+      <path d="M419 276H526 M427 309V284H448V309 M455 285H476V300H455Z M483 285H504V300H483Z"/>
+      <path d="M26 309H578 M37 315H105 M142 315H287 M358 315H426 M514 315H567"/>
+    </g>
+    <g fill="var(--paper)" stroke="var(--edge)" stroke-width="1.25">
+      <path d="M86 76V63H202V76H194V68H94V76Z"/>
+      <path d="M205 298H302V305H205Z"/>
+    </g>
+    <g data-rooms></g>
+    <g data-roofs><use href="#oss-cornice"/><use href="#oss-cornice"/></g>
+    <g data-spring>
+      <g data-coils fill="none" stroke="var(--dark-edge)" stroke-width="2.6" stroke-linejoin="round">
+        <path d="M221 298L236 294L220 289L236 284L221 279 M271 298L286 294L270 289L286 284L271 279"/>
+      </g>
+      <g data-spring-top>
+        <path d="M207 273H298L293 281H211Z" fill="var(--paper)" stroke="var(--dark-edge)" stroke-width="2"/>
+        <path d="M243 269L259 256M249 256H259V266" fill="none" stroke="var(--dark-edge)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+    <g data-awning>
+      <path d="M0 0H96V8L90 13L84 8L78 13L72 8L66 13L60 8L54 13L48 8L42 13L36 8L30 13L24 8L18 13L12 8L6 13L0 8Z" fill="var(--paper)" stroke="var(--dark-edge)" stroke-width="1.6"/>
+      <path d="M2 1H94V7H2Z" fill="url(#oss-paper)"/>
+    </g>
+    <g data-pin="left" transform="translate(96 73)"><use href="#oss-pin"/></g>
+    <g data-pin="right" transform="translate(192 73)"><use href="#oss-pin"/></g>
+    <polyline data-trail fill="none" stroke="var(--dark-edge)" stroke-width="1.8" stroke-dasharray="2 5" stroke-linecap="round" opacity=".64"/>
+    <g data-splinters></g>
+    <g data-ball>
+      <circle r="14" fill="var(--ink)"/>
+      <g fill="var(--paper)"><circle cx="-5" cy="-4" r="2.4"/><circle cx="1" cy="-7" r="2.2"/><circle cx="1" cy="0" r="2.1"/></g>
+    </g>
+    <g data-pencil visibility="hidden" stroke-linecap="round">
+      <line data-pencil-base stroke="var(--paper)" stroke-width="7"/>
+      <line data-pencil-line stroke="var(--pin-ink)" stroke-width="3.5"/>
+    </g>
+  </g>
+</svg></div>
+      <div class="action-row">
+        <p data-outcome role="status" aria-live="polite">划过圆扣或亮窗，松手拆除。</p>
+        <button type="button" class="reset" data-reset disabled>重画</button>
+      </div>
+    </section>
+    <footer>
+      <div class="legend" aria-label="图例"><span><i class="rivet"></i>可拆卡扣</span><span><i class="windows"></i>亮窗房间</span></div>
+      <details><summary>按键划线</summary><div class="choices">
+        <button type="button" data-trial="left">划左扣</button><button type="button" data-trial="right">划右扣</button><button type="button" data-trial="both">同时划两扣</button>
+      </div></details>
+    </footer>
+    <noscript>请在浏览器中开启 JavaScript 以绘制拆迁线。</noscript>
+  </main>
+  <script>
+(() => {
+  // src/level.js
+  var level = {
+    width: 600,
+    height: 328,
+    floor: 309,
+    gravity: 580,
+    strokeLimit: 144,
+    ballRadius: 14,
+    roomWidth: 68,
+    roomHeight: 41,
+    pins: [{ x: 96, y: 73 }, { x: 192, y: 73 }],
+    rooms: [{ x: 198, y: 147 }, { x: 206, y: 198 }, { x: 437, y: 173 }, { x: 458, y: 224 }],
+    spring: { left: 207, right: 298, top: 273, vx: 218, vy: -370 }
+  };
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+  function makeStroke(start, end, tolerance) {
+    const dx = end.x - start.x, dy = end.y - start.y;
+    const fraction = Math.min(1, level.strokeLimit / (Math.hypot(dx, dy) || 1));
+    return { start, end: { x: start.x + dx * fraction, y: start.y + dy * fraction }, tolerance };
+  }
+  function intersectsRoom(start, end, room) {
+    let from = 0, to = 1;
+    for (const [position2, delta, low, high] of [
+      [start.x, end.x - start.x, room.x, room.x + level.roomWidth],
+      [start.y, end.y - start.y, room.y, room.y + level.roomHeight]
+    ]) {
+      if (Math.abs(delta) < 1e-5) {
+        if (position2 < low || position2 > high) return false;
+        continue;
+      }
+      const first = (low - position2) / delta, last = (high - position2) / delta;
+      from = Math.max(from, Math.min(first, last));
+      to = Math.min(to, Math.max(first, last));
+    }
+    return from <= to;
+  }
+  function hitTest({ start, end, tolerance }) {
+    const dx = end.x - start.x, dy = end.y - start.y;
+    const lengthSquared = dx * dx + dy * dy || 1;
+    return {
+      pins: level.pins.map((p) => {
+        const t = clamp(((p.x - start.x) * dx + (p.y - start.y) * dy) / lengthSquared, 0, 1);
+        return Math.hypot(p.x - start.x - t * dx, p.y - start.y - t * dy) <= tolerance;
+      }),
+      rooms: level.rooms.map((room) => intersectsRoom(start, end, room))
+    };
+  }
+
+  // src/physics.js
+  var timeStep = 1 / 120;
+  var [leftPin, rightPin] = level.pins;
+  var shelfWidth = rightPin.x - leftPin.x;
+  var radius = level.ballRadius;
+  function newRound() {
+    return {
+      phase: "ready",
+      time: 0,
+      frames: 0,
+      quiet: 0,
+      impactPause: 0,
+      smashed: 0,
+      attached: [true, true],
+      rooms: level.rooms.map(() => true),
+      events: [],
+      shelf: { x: leftPin.x, y: leftPin.y, tilt: 0, turnSpeed: 0, fallSpeed: 0 },
+      ball: {
+        x: leftPin.x + shelfWidth / 2,
+        y: leftPin.y - radius,
+        vx: 0,
+        vy: 0,
+        spin: 0,
+        mode: "shelf",
+        along: shelfWidth / 2,
+        speed: 0
+      },
+      springTime: null,
+      trail: []
+    };
+  }
+  function breakRoom(state2, index) {
+    if (!state2.rooms[index]) return;
+    state2.rooms[index] = false;
+    state2.smashed++;
+    state2.impactPause = state2.smashed === level.rooms.length ? 0.085 : 0.035;
+    state2.events.push({ type: "break", index, count: state2.smashed });
+  }
+  function applyCut(state2, hits) {
+    if (state2.phase !== "ready" || !(hits.pins.some(Boolean) || hits.rooms.some(Boolean))) return false;
+    state2.phase = "moving";
+    state2.attached = hits.pins.map((hit) => !hit);
+    state2.trail.push({ x: state2.ball.x, y: state2.ball.y });
+    hits.rooms.forEach((hit, i) => {
+      if (hit) breakRoom(state2, i);
+    });
+    return true;
+  }
+  function moveShelf(state2, dt) {
+    const shelf = state2.shelf;
+    const [left, right] = state2.attached;
+    if (!left && !right) {
+      shelf.fallSpeed += level.gravity * dt;
+      shelf.y = Math.min(level.floor - 13, shelf.y + shelf.fallSpeed * dt);
+    } else if (left !== right) {
+      shelf.turnSpeed += 5.4 * dt;
+      shelf.tilt = clamp(shelf.tilt + (left ? 1 : -1) * shelf.turnSpeed * dt, -0.49, 0.49);
+      if (right) {
+        shelf.x = rightPin.x - shelfWidth * Math.cos(shelf.tilt);
+        shelf.y = rightPin.y - shelfWidth * Math.sin(shelf.tilt);
+      }
+    }
+  }
+  function moveBall(state2, dt) {
+    const ball = state2.ball, shelf = state2.shelf;
+    if (ball.mode === "shelf") {
+      const sin = Math.sin(shelf.tilt), cos = Math.cos(shelf.tilt);
+      ball.speed += level.gravity * sin * 0.74 * dt;
+      ball.along += ball.speed * dt;
+      ball.spin += ball.speed * dt / radius;
+      ball.x = shelf.x + ball.along * cos + radius * sin;
+      ball.y = shelf.y + ball.along * sin - radius * cos;
+      if (ball.along < 0 || ball.along > shelfWidth) {
+        ball.mode = "air";
+        ball.vx = ball.speed * cos;
+        ball.vy = ball.speed * sin;
+      }
+      return;
+    }
+    if (ball.mode === "ground") {
+      ball.x = clamp(ball.x + ball.vx * dt, radius, level.width - radius);
+      ball.spin += ball.vx * dt / radius;
+      ball.vx *= Math.exp(-7 * dt);
+      return;
+    }
+    const oldBottom = ball.y + radius;
+    ball.vy += level.gravity * dt;
+    ball.x += ball.vx * dt;
+    ball.y += ball.vy * dt;
+    ball.spin += ball.vx * dt / radius;
+    if (ball.x < radius || ball.x > level.width - radius) {
+      ball.x = clamp(ball.x, radius, level.width - radius);
+      ball.vx *= -0.2;
+    }
+    level.rooms.forEach((room, i) => {
+      if (!state2.rooms[i]) return;
+      const nearX = clamp(ball.x, room.x, room.x + level.roomWidth);
+      const nearY = clamp(ball.y, room.y, room.y + level.roomHeight);
+      if (Math.hypot(ball.x - nearX, ball.y - nearY) <= radius) breakRoom(state2, i);
+    });
+    const spring = level.spring;
+    if (state2.springTime === null && oldBottom <= spring.top && ball.y + radius >= spring.top && ball.x >= spring.left && ball.x <= spring.right) {
+      state2.springTime = state2.time;
+      ball.y = spring.top - radius;
+      ball.vx = spring.vx;
+      ball.vy = spring.vy;
+      state2.events.push({ type: "spring" });
+    }
+    if (ball.y + radius >= level.floor) {
+      ball.y = level.floor - radius;
+      ball.mode = "ground";
+      state2.events.push({ type: "land" });
+    }
+  }
+  function advance(state2) {
+    if (state2.phase !== "moving") return;
+    if (state2.impactPause > 0) {
+      state2.impactPause -= timeStep;
+      return;
+    }
+    state2.time += timeStep;
+    state2.frames++;
+    moveShelf(state2, timeStep);
+    moveBall(state2, timeStep);
+    const ball = state2.ball;
+    if (state2.frames % 5 === 0) {
+      const last = state2.trail[state2.trail.length - 1];
+      if (!last || Math.hypot(ball.x - last.x, ball.y - last.y) > 3) state2.trail.push({ x: ball.x, y: ball.y });
+    }
+    const steady = ball.mode === "ground" && Math.abs(ball.vx) < 5 || ball.mode === "shelf" && (state2.attached.every(Boolean) || state2.shelf.y >= level.floor - 13);
+    state2.quiet = steady ? state2.quiet + timeStep : 0;
+    if (state2.quiet > 0.85 || state2.time > 6) state2.phase = "done";
+  }
+
+  // src/view.js
+  var svgNode = (name) => document.createElementNS("http://www.w3.org/2000/svg", name);
+  var translate = (x, y) => "translate(" + x + " " + y + ")";
+  var place = (node, x, y, angle = 0) => node.setAttribute("transform", translate(x, y) + " rotate(" + angle + ")");
+  var show = (node, visible) => node.setAttribute("visibility", visible ? "visible" : "hidden");
+  function createView(root2) {
+    const get = (name) => root2.querySelector("[data-" + name + "]");
+    const pins = [...root2.querySelectorAll("[data-pin]")];
+    const roofNodes = [...get("roofs").children];
+    const debrisGroup = get("splinters"), awning = get("awning"), ball = get("ball"), trail = get("trail");
+    const spring = get("spring-top"), coils = get("coils"), pencil = get("pencil");
+    const lines = [...pencil.querySelectorAll("line")];
+    const rooms = level.rooms.map((room) => {
+      const node = svgNode("use");
+      node.setAttribute("href", "#oss-room");
+      place(node, room.x, room.y);
+      get("rooms").append(node);
+      return node;
+    });
+    let pieces = [], rings = [];
+    function clearStroke() {
+      show(pencil, false);
+      for (const node of [...pins, ...rooms]) node.classList.remove("stroke-hit");
+    }
+    function preview(stroke, hits) {
+      pins.forEach((node, i) => node.classList.toggle("stroke-hit", hits.pins[i]));
+      rooms.forEach((node, i) => node.classList.toggle("stroke-hit", hits.rooms[i]));
+      for (const line of lines) {
+        line.setAttribute("x1", stroke.start.x);
+        line.setAttribute("y1", stroke.start.y);
+        line.setAttribute("x2", stroke.end.x);
+        line.setAttribute("y2", stroke.end.y);
+      }
+      show(pencil, true);
+    }
+    function reset2() {
+      clearStroke();
+      debrisGroup.replaceChildren();
+      rings = [];
+      pieces = [0, 2].map((support, i) => ({
+        node: roofNodes[i],
+        support,
+        x: level.rooms[support].x + 34,
+        y: level.rooms[support].y - 9,
+        vx: i ? 32 : -35,
+        vy: 0,
+        angle: 0,
+        turn: i ? 65 : -75,
+        halfWidth: 39,
+        halfHeight: 10
+      }));
+    }
+    function crumble(index, time) {
+      const room = level.rooms[index];
+      const ring = svgNode("circle");
+      ring.setAttribute("cx", room.x + 34);
+      ring.setAttribute("cy", room.y + 20);
+      ring.setAttribute("class", "impact-ring");
+      debrisGroup.append(ring);
+      rings.push({ node: ring, time });
+      for (let i = 0; i < 6; i++) {
+        const large = i === 1 || i === 4;
+        const node = svgNode("path");
+        node.setAttribute("d", large ? "M-12-7H12V2L6-1L2 6H-12Z" : "M-5-2H5L3 2H-5Z");
+        node.setAttribute("class", large ? "shard large" : "shard");
+        debrisGroup.append(node);
+        pieces.push({
+          node,
+          x: room.x + 7 + i * 10,
+          y: room.y + 19,
+          vx: (i - 2.5) * 26,
+          vy: -48 - i * 17 % 63,
+          angle: i * 11,
+          turn: (i - 2.5) * 85,
+          halfWidth: large ? 12 : 5,
+          halfHeight: large ? 7 : 2
+        });
+      }
+    }
+    function stepEffects(dt, state2) {
+      for (const p of pieces) {
+        if (p.landed || state2.rooms[p.support]) continue;
+        p.vy += level.gravity * dt;
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.angle += p.turn * dt;
+        const angle = p.angle * Math.PI / 180;
+        const bottom = Math.abs(Math.sin(angle)) * p.halfWidth + Math.abs(Math.cos(angle)) * p.halfHeight;
+        if (p.y + bottom >= level.floor) {
+          p.y = level.floor - bottom;
+          p.landed = true;
+        }
+      }
+    }
+    function draw(state2) {
+      const deg = 180 / Math.PI;
+      place(awning, state2.shelf.x, state2.shelf.y, state2.shelf.tilt * deg);
+      place(ball, state2.ball.x, state2.ball.y, state2.ball.spin * deg);
+      rooms.forEach((node, i) => show(node, state2.rooms[i]));
+      pins.forEach((node, i) => show(node, state2.attached[i]));
+      const compression = state2.springTime === null ? 0 : 8 + 5 * Math.exp(-8 * (state2.time - state2.springTime));
+      spring.setAttribute("transform", translate(0, compression));
+      coils.setAttribute("transform", "translate(0 298) scale(1 " + (1 - compression / 24) + ") translate(0 -298)");
+      trail.setAttribute("points", state2.trail.map((p) => p.x.toFixed(1) + "," + p.y.toFixed(1)).join(" "));
+      pieces.forEach((p) => place(p.node, p.x, p.y, p.angle));
+      for (const ring of rings) {
+        const progress = Math.min(1, (state2.time - ring.time) / 0.21);
+        ring.node.setAttribute("r", 6 + 35 * progress);
+        ring.node.setAttribute("opacity", 0.65 * (1 - progress));
+      }
+    }
+    return { reset: reset2, clearStroke, preview, crumble, stepEffects, draw };
+  }
+
+  // src/audio.js
+  function createAudio(button) {
+    const Audio = window.AudioContext || window.webkitAudioContext;
+    let context;
+    button.disabled = !Audio;
+    button.addEventListener("click", async () => {
+      const enabled = button.getAttribute("aria-pressed") !== "true";
+      button.setAttribute("aria-pressed", String(enabled));
+      button.querySelector("[data-sound-state]").textContent = enabled ? "开" : "关";
+      if (!enabled) return;
+      try {
+        context ?? (context = new Audio());
+        await context.resume();
+      } catch {
+        button.setAttribute("aria-pressed", "false");
+        button.querySelector("[data-sound-state]").textContent = "关";
+      }
+    });
+    function tone(from, to, length, gain, wave) {
+      if (context?.state !== "running" || button.getAttribute("aria-pressed") !== "true") return;
+      const now = context.currentTime, oscillator = context.createOscillator(), envelope = context.createGain();
+      oscillator.type = wave;
+      oscillator.frequency.setValueAtTime(from, now);
+      oscillator.frequency.exponentialRampToValueAtTime(to, now + length);
+      envelope.gain.setValueAtTime(1e-3, now);
+      envelope.gain.exponentialRampToValueAtTime(gain, now + 8e-3);
+      envelope.gain.exponentialRampToValueAtTime(1e-3, now + length);
+      oscillator.connect(envelope).connect(context.destination);
+      oscillator.start(now);
+      oscillator.stop(now + length + 0.01);
+    }
+    return ({ type, count }) => {
+      if (type === "cut") tone(720, 240, 0.07, 0.035, "triangle");
+      if (type === "break") {
+        tone(115 + count * 43, 74 + count * 21, 0.13, 0.06, "triangle");
+        if (count === 4) tone(100, 38, 0.24, 0.065, "sine");
+      }
+      if (type === "spring") tone(170, 420, 0.17, 0.055, "sine");
+      if (type === "land") tone(105, 48, 0.14, 0.04, "sine");
+    };
+  }
+
+  // src/game.js
+  var root = document.querySelector("main");
+  var svg = root.querySelector("[data-board]");
+  var remaining = root.querySelector("[data-strokes]");
+  var cleared = root.querySelector("[data-cleared]");
+  var status = root.querySelector("[data-outcome]");
+  var retry = root.querySelector("[data-reset]");
+  var choices = [...root.querySelectorAll("[data-trial]")];
+  var reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  var view = createView(root);
+  var sound = createAudio(document.querySelector("[data-sound]"));
+  var state;
+  var drag;
+  var frame;
+  var previousTime;
+  var accumulator;
+  function reset() {
+    cancelAnimationFrame(frame);
+    if (drag && svg.hasPointerCapture(drag.id)) svg.releasePointerCapture(drag.id);
+    drag = null;
+    state = newRound();
+    view.reset();
+    view.draw(state);
+    root.dataset.phase = "ready";
+    remaining.textContent = "1";
+    cleared.textContent = "0";
+    status.textContent = "划过圆扣或亮窗，松手拆除。";
+    retry.disabled = true;
+    choices.forEach((button) => {
+      button.disabled = false;
+    });
+  }
+  function consumeEvents(audible) {
+    for (const event of state.events) {
+      if (event.type === "break") {
+        view.crumble(event.index, state.time);
+        cleared.textContent = String(event.count);
+      }
+      if (audible) sound(event);
+    }
+    state.events.length = 0;
+  }
+  function step(audible) {
+    const before = state.time;
+    advance(state);
+    consumeEvents(audible);
+    if (state.time > before) view.stepEffects(timeStep, state);
+  }
+  function finish() {
+    root.dataset.phase = "done";
+    if (state.smashed === level.rooms.length) status.textContent = "全街打烊！一笔拆完四间亮房。";
+    else if (state.attached.every((pin) => !pin)) status.textContent = "两扣齐断，雨棚托着球平落进空井。";
+    else if (!state.attached[0]) status.textContent = "球滚进了左侧空巷。换一处落笔试试。";
+    else status.textContent = "这一笔拆了 " + state.smashed + " 间。重画再试。";
+  }
+  function animate(now) {
+    accumulator += Math.min((now - previousTime) / 1e3, 0.06);
+    previousTime = now;
+    while (accumulator >= timeStep && state.phase === "moving") {
+      step(true);
+      accumulator -= timeStep;
+    }
+    view.draw(state);
+    if (state.phase === "moving") frame = requestAnimationFrame(animate);
+    else finish();
+  }
+  function submit(stroke) {
+    view.clearStroke();
+    if (!applyCut(state, hitTest(stroke))) {
+      status.textContent = "划空了，仍有一笔。试着穿过圆扣或亮窗。";
+      return;
+    }
+    choices.forEach((button) => {
+      button.disabled = true;
+    });
+    retry.disabled = false;
+    remaining.textContent = "0";
+    root.dataset.phase = "moving";
+    status.textContent = "已落笔，看看球会滚向哪里。";
+    sound({ type: "cut" });
+    consumeEvents(!reducedMotion.matches);
+    if (reducedMotion.matches) {
+      while (state.phase === "moving") step(false);
+      view.draw(state);
+      finish();
+      return;
+    }
+    view.draw(state);
+    accumulator = 0;
+    previousTime = performance.now();
+    frame = requestAnimationFrame(animate);
+  }
+  function position(event) {
+    const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(svg.getScreenCTM().inverse());
+    return { x: clamp(point.x, 0, level.width), y: clamp(point.y, 0, level.height) };
+  }
+  function strokeAt(event) {
+    return makeStroke(drag.start, position(event), drag.tolerance);
+  }
+  svg.addEventListener("pointerdown", (event) => {
+    if (drag || state.phase !== "ready" || event.button !== 0 || !event.isPrimary) return;
+    event.preventDefault();
+    const tolerance = event.pointerType === "touch" ? clamp(22 / svg.getScreenCTM().a, 12, 44) : 12;
+    drag = { id: event.pointerId, start: position(event), tolerance };
+    svg.setPointerCapture(event.pointerId);
+    const stroke = strokeAt(event);
+    view.preview(stroke, hitTest(stroke));
+  });
+  svg.addEventListener("pointermove", (event) => {
+    if (drag?.id !== event.pointerId) return;
+    const stroke = strokeAt(event);
+    view.preview(stroke, hitTest(stroke));
+  });
+  svg.addEventListener("pointerup", (event) => {
+    if (drag?.id !== event.pointerId) return;
+    const stroke = strokeAt(event);
+    drag = null;
+    if (Math.hypot(stroke.end.x - stroke.start.x, stroke.end.y - stroke.start.y) < 3) view.clearStroke();
+    else submit(stroke);
+  });
+  function cancelDrag(event) {
+    if (drag?.id !== event.pointerId) return;
+    drag = null;
+    view.clearStroke();
+  }
+  svg.addEventListener("pointercancel", cancelDrag);
+  svg.addEventListener("lostpointercapture", cancelDrag);
+  svg.addEventListener("dragstart", (event) => event.preventDefault());
+  retry.addEventListener("click", reset);
+  choices.forEach((button) => button.addEventListener("click", () => {
+    const option = button.dataset.trial;
+    const x = level.pins[option === "right" ? 1 : 0].x;
+    const endX = option === "both" ? level.pins[1].x : x;
+    submit(makeStroke({ x, y: 67 }, { x: endX, y: 79 }, 12));
+  }));
+  reset();
+})();
+</script>
+</body>
+</html>

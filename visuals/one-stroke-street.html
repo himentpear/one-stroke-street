@@ -1,0 +1,503 @@
+<div id="one-stroke-street" lang="zh-CN">
+  <div class="viz-row">
+    <h3>保龄球馆的最后一单</h3>
+    <span data-score class="text-small tabular-nums">剩余 1 笔 · 已拆 0 / 4 间</span>
+  </div>
+  <div class="street-field">
+    <svg data-board class="cursor-interaction" role="img" aria-labelledby="oss-title oss-desc">
+      <title id="oss-title">一笔拆掉街两边的四间亮窗房</title>
+      <desc id="oss-desc">左楼屋顶的保龄球招牌搁在双扣雨棚上。棚的右下方有两间亮窗房，下面是指向右方的弹板。街对面还有两间亮窗房。可以在图上拖线，或用下方按钮试划卡扣。</desc>
+      <defs>
+        <pattern id="oss-paper" width="8" height="8" patternUnits="userSpaceOnUse">
+          <path d="M-2 2L2-2 M0 8L8 0 M6 10L10 6" fill="none" stroke="var(--edge)" stroke-width=".8"/>
+        </pattern>
+        <g id="oss-room">
+          <path d="M-9 4L0 0V40L-9 34Z M0 0L8-6H75L68 0Z" fill="var(--wash)" stroke="var(--edge)" stroke-width="1.2"/>
+          <path d="M0 3L5 0H68V37L64 41H0Z" fill="var(--window-face)" stroke="var(--target)" stroke-width="1.5"/>
+          <path d="M0 36H68L64 41H0Z" fill="var(--target)"/>
+          <g fill="var(--target)">
+            <rect x="8" y="7" width="13" height="23" rx="1.5"/>
+            <rect x="27.5" y="7" width="13" height="23" rx="1.5"/>
+            <rect x="47" y="7" width="13" height="23" rx="1.5"/>
+          </g>
+          <path d="M8 17H21 M27.5 17H40.5 M47 17H60" fill="none" stroke="var(--window-face)" stroke-width="2"/>
+        </g>
+        <g id="oss-cornice">
+          <path d="M-39 1H39L35 9H-35Z" fill="var(--paper)" stroke="var(--dark-edge)" stroke-width="1.4"/>
+          <path d="M-32 1V-5H-16V-11H16V-5H32V1Z" fill="var(--wash)" stroke="var(--dark-edge)" stroke-width="1.4"/>
+          <path d="M-11-5H11 M-29 5H29" fill="none" stroke="var(--edge)" stroke-width="1.4"/>
+        </g>
+        <g id="oss-pin">
+          <circle r="10" fill="var(--pin-face)" stroke="var(--pin-ink)" stroke-width="2.5"/>
+          <circle r="4" fill="var(--pin-ink)"/>
+        </g>
+      </defs>
+      <g data-world>
+        <g fill="var(--wash)" stroke="var(--fine)" stroke-linejoin="round">
+          <path d="M12 309V254H25V248H48V239H65V309Z M292 309V276H311V264H341V309Z M344 309V244H352V237H375V244H388V309Z M548 309V258H566V251H579V272H591V309Z"/>
+          <path d="M53 309V112H66V103H96V89H180V244H189V309Z M417 309V277H427V268H525V277H535V309Z"/>
+        </g>
+        <g fill="none" stroke="var(--edge)" stroke-width="1.3" stroke-linejoin="round">
+          <path d="M52 111H96 M63 122H88V136H63Z M63 146H88V160H63Z M63 170H88V184H63Z M63 194H88V208H63Z"/>
+          <path d="M101 309V113H176V309 M107 113V309 M170 113V309 M68 236H93V309 M57 232H95"/>
+          <path d="M419 276H526 M427 309V284H448V309 M455 285H476V300H455Z M483 285H504V300H483Z"/>
+          <path d="M26 309H578 M37 315H105 M142 315H287 M358 315H426 M514 315H567"/>
+        </g>
+        <g fill="var(--paper)" stroke="var(--edge)" stroke-width="1.25">
+          <path d="M86 76V63H202V76H194V68H94V76Z"/>
+          <path d="M205 298H302V305H205Z"/>
+        </g>
+        <g data-rooms></g>
+        <g data-roofs><use href="#oss-cornice"/><use href="#oss-cornice"/></g>
+        <g data-spring>
+          <g data-coils fill="none" stroke="var(--dark-edge)" stroke-width="2.6" stroke-linejoin="round">
+            <path d="M221 298L236 294L220 289L236 284L221 279 M271 298L286 294L270 289L286 284L271 279"/>
+          </g>
+          <g data-spring-top>
+            <path d="M207 273H298L293 281H211Z" fill="var(--paper)" stroke="var(--dark-edge)" stroke-width="2"/>
+            <path d="M243 269L259 256M249 256H259V266" fill="none" stroke="var(--dark-edge)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </g>
+        <g data-awning>
+          <path d="M0 0H96V8L90 13L84 8L78 13L72 8L66 13L60 8L54 13L48 8L42 13L36 8L30 13L24 8L18 13L12 8L6 13L0 8Z" fill="var(--paper)" stroke="var(--dark-edge)" stroke-width="1.6"/>
+          <path d="M2 1H94V7H2Z" fill="url(#oss-paper)"/>
+        </g>
+        <g data-pin="left" transform="translate(96 73)"><use href="#oss-pin"/></g>
+        <g data-pin="right" transform="translate(192 73)"><use href="#oss-pin"/></g>
+        <polyline data-trail fill="none" stroke="var(--dark-edge)" stroke-width="1.8" stroke-dasharray="2 5" stroke-linecap="round" opacity=".64"/>
+        <g data-splinters></g>
+        <g data-ball>
+          <circle r="14" fill="var(--ink)"/>
+          <g fill="var(--paper)"><circle cx="-5" cy="-4" r="2.4"/><circle cx="1" cy="-7" r="2.2"/><circle cx="1" cy="0" r="2.1"/></g>
+        </g>
+        <g data-pencil visibility="hidden" stroke-linecap="round">
+          <line data-pencil-base stroke="var(--paper)" stroke-width="7"/>
+          <line data-pencil-line stroke="var(--pin-ink)" stroke-width="3.5"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <div class="viz-controls">
+    <button type="button" class="btn" data-trial="left">试划左扣</button>
+    <button type="button" class="btn" data-trial="right">试划右扣</button>
+    <button type="button" class="btn" data-trial="both">同时划两扣</button>
+    <button type="button" class="btn btn-ghost" data-reset>重画</button>
+    <label class="form-check form-switch"><input class="form-check-input" type="checkbox" data-sound><span class="form-check-label">音效</span></label>
+  </div>
+  <p class="text-small" data-outcome role="status">在圆扣或亮窗房上划一条短线，松手拆除。</p>
+</div>
+<style>
+  #one-stroke-street {
+    --paper: var(--background, Canvas);
+    --ink: var(--foreground, CanvasText);
+    --wash: color-mix(in srgb, var(--ink) 4%, var(--paper));
+    --fine: color-mix(in srgb, var(--ink) 14%, var(--paper));
+    --edge: color-mix(in srgb, var(--ink) 30%, var(--paper));
+    --dark-edge: color-mix(in srgb, var(--ink) 73%, var(--paper));
+    --target: var(--viz-series-1, var(--blue, Highlight));
+    --pin-ink: var(--viz-series-2, var(--orange, Highlight));
+    --pin-face: color-mix(in srgb, var(--pin-ink) 15%, var(--paper));
+    --window-face: color-mix(in srgb, var(--target) 13%, var(--paper));
+    display: grid;
+    gap: calc(var(--font-size-base, 14px) * .5);
+    min-width: 0;
+  }
+  #one-stroke-street .street-field {width: 100%; aspect-ratio: 600 / 328;}
+  #one-stroke-street [data-board] {display: block; width: 100%; height: 100%; touch-action: none; user-select: none;}
+  #one-stroke-street .stroke-hit {--window-face: var(--pin-face); --target: var(--pin-ink); filter: drop-shadow(0 0 2px var(--pin-ink));}
+  #one-stroke-street [data-outcome] {min-height: 1.5em;}
+</style>
+<script>
+(() => {
+  const root = document.getElementById('one-stroke-street');
+  const get = name => root.querySelector('[data-' + name + ']');
+  const svg = get('board');
+  const world = get('world');
+  const score = get('score');
+  const outcome = get('outcome');
+  const pinNodes = Array.from(root.querySelectorAll('[data-pin]'));
+  const roomGroup = get('rooms');
+  const splinterGroup = get('splinters');
+  const awningNode = get('awning');
+  const ballNode = get('ball');
+  const trailNode = get('trail');
+  const pencil = get('pencil');
+  const pencilLines = pencil.querySelectorAll('line');
+  const topOfSpring = get('spring-top');
+  const coils = get('coils');
+  const soundSwitch = get('sound');
+  const resetButton = get('reset');
+  const origin = {x: 96, y: 73};
+  const width = 96;
+  const radius = 14;
+  const floor = 309;
+  const gravity = 580;
+  const strokeLimit = 144;
+  const tick = 1 / 120;
+  const roomWidth = 68;
+  const roomHeight = 41;
+  const plan = [{x: 198, y: 147}, {x: 206, y: 198}, {x: 437, y: 173}, {x: 458, y: 224}];
+  const pins = [origin, {x: origin.x + width, y: origin.y}];
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const element = tag => document.createElementNS('http://www.w3.org/2000/svg', tag);
+  const moved = (x, y) => 'translate(' + x + ' ' + y + ')';
+  const degrees = angle => angle * 180 / Math.PI;
+  const between = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const visibility = (node, visible) => node.setAttribute('visibility', visible ? 'visible' : 'hidden');
+  const roomNodes = plan.map(({x, y}) => {
+    const room = element('use');
+    room.setAttribute('href', '#oss-room');
+    room.setAttribute('transform', moved(x, y));
+    roomGroup.append(room);
+    return room;
+  });
+  const roofNodes = Array.from(get('roofs').children);
+
+  let state, drag, frame, lastTime, remainder, audioContext;
+  let storedStroke = null;
+  let silent = false;
+
+  function reset() {
+    cancelAnimationFrame(frame);
+    drag = null;
+    storedStroke = null;
+    state = {
+      phase: 'ready', time: 0, frames: 0, quiet: 0, impactPause: 0, attached: [true, true], rooms: plan.map(() => true),
+      awning: {x: origin.x, y: origin.y, tilt: 0, turnSpeed: 0, fallSpeed: 0},
+      ball: {x: origin.x + width / 2, y: origin.y - radius, vx: 0, vy: 0,
+        spin: 0, mode: 'shelf', along: width / 2, speed: 0},
+      springTime: null, trail: [], splinters: [], rings: [],
+      roofs: [0, 2].map((support, i) => ({node: roofNodes[i], support, x: plan[support].x + 34,
+        y: plan[support].y - 9, vx: i ? 32 : -35, vy: 0, angle: 0, turn: i ? 65 : -75, halfWidth: 39, halfHeight: 10}))
+    };
+    splinterGroup.replaceChildren();
+    visibility(pencil, false);
+    [...pinNodes, ...roomNodes].forEach(node => node.classList.remove('stroke-hit'));
+    score.textContent = '剩余 1 笔 · 已拆 0 / 4 间';
+    outcome.textContent = '在圆扣或亮窗房上划一条短线，松手拆除。';
+    resetButton.disabled = true;
+    render();
+  }
+
+  function tone(from, to, length, gain, wave) {
+    if (silent || !soundSwitch.checked || audioContext?.state !== 'running') return;
+    const now = audioContext.currentTime;
+    const oscillator = audioContext.createOscillator();
+    const envelope = audioContext.createGain();
+    oscillator.type = wave;
+    oscillator.frequency.setValueAtTime(from, now);
+    oscillator.frequency.exponentialRampToValueAtTime(to, now + length);
+    envelope.gain.setValueAtTime(.001, now);
+    envelope.gain.exponentialRampToValueAtTime(gain, now + .008);
+    envelope.gain.exponentialRampToValueAtTime(.001, now + length);
+    oscillator.connect(envelope).connect(audioContext.destination);
+    oscillator.start(now);
+    oscillator.stop(now + length + .01);
+  }
+  soundSwitch.addEventListener('change', () => {
+    if (soundSwitch.checked && window.AudioContext) {
+      audioContext ??= new AudioContext();
+      audioContext.resume().catch(() => {});
+    }
+  });
+
+  function breakRoom(index) {
+    if (!state.rooms[index]) return;
+    state.rooms[index] = false;
+    visibility(roomNodes[index], false);
+    const count = state.rooms.filter(alive => !alive).length;
+    score.textContent = '剩余 0 笔 · 已拆 ' + count + ' / 4 间';
+    tone(115 + count * 43, 74 + count * 21, .13, .06, 'triangle');
+    if (count === plan.length) tone(100, 38, .24, .065, 'sine');
+    state.impactPause = count === plan.length ? .085 : .035;
+    const room = plan[index];
+    const ring = element('circle');
+    ring.setAttribute('cx', room.x + 34);
+    ring.setAttribute('cy', room.y + 20);
+    ring.setAttribute('fill', 'none');
+    ring.setAttribute('stroke', 'var(--target)');
+    ring.setAttribute('stroke-width', '2');
+    splinterGroup.append(ring);
+    state.rings.push({node: ring, born: state.time});
+    for (let i = 0; i < 6; i++) {
+      const large = i === 1 || i === 4;
+      const node = element('path');
+      node.setAttribute('d', large ? 'M-12-7H12V2L6-1L2 6H-12Z' : 'M-5-2H5L3 2H-5Z');
+      node.setAttribute('fill', large ? 'var(--window-face)' : 'var(--target)');
+      if (large) node.setAttribute('stroke', 'var(--target)');
+      splinterGroup.append(node);
+      state.splinters.push({node, x: room.x + 7 + i * 10, y: room.y + 19,
+        vx: (i - 2.5) * 26, vy: -48 - (i * 17) % 63, angle: i * 11, turn: (i - 2.5) * 85,
+        halfWidth: large ? 12 : 5, halfHeight: large ? 7 : 2});
+    }
+  }
+
+  function moveAwning(dt) {
+    const a = state.awning;
+    const [left, right] = state.attached;
+    if (!left && !right) {
+      a.fallSpeed += gravity * dt;
+      a.y = Math.min(floor - 13, a.y + a.fallSpeed * dt);
+    } else if (left !== right) {
+      a.turnSpeed += 5.4 * dt;
+      a.tilt = between(a.tilt + (left ? 1 : -1) * a.turnSpeed * dt, -.49, .49);
+      if (right) {
+        a.x = pins[1].x - width * Math.cos(a.tilt);
+        a.y = pins[1].y - width * Math.sin(a.tilt);
+      }
+    }
+  }
+
+  function moveBall(dt) {
+    const b = state.ball;
+    const a = state.awning;
+    if (b.mode === 'shelf') {
+      const sin = Math.sin(a.tilt), cos = Math.cos(a.tilt);
+      b.speed += gravity * sin * .74 * dt;
+      b.along += b.speed * dt;
+      b.spin += b.speed * dt / radius;
+      b.x = a.x + b.along * cos + radius * sin;
+      b.y = a.y + b.along * sin - radius * cos;
+      if (b.along < 0 || b.along > width) {
+        b.mode = 'air';
+        b.vx = b.speed * cos;
+        b.vy = b.speed * sin;
+      }
+      return;
+    }
+    if (b.mode === 'ground') {
+      b.x = between(b.x + b.vx * dt, radius, 600 - radius);
+      b.spin += b.vx * dt / radius;
+      b.vx *= Math.exp(-7 * dt);
+      return;
+    }
+    const oldBottom = b.y + radius;
+    b.vy += gravity * dt;
+    b.x += b.vx * dt;
+    b.y += b.vy * dt;
+    b.spin += b.vx * dt / radius;
+    if (b.x < radius || b.x > 600 - radius) {
+      b.x = between(b.x, radius, 600 - radius);
+      b.vx *= -.20;
+    }
+    plan.forEach((room, i) => {
+      if (!state.rooms[i]) return;
+      const nearX = between(b.x, room.x, room.x + roomWidth);
+      const nearY = between(b.y, room.y, room.y + roomHeight);
+      if (Math.hypot(b.x - nearX, b.y - nearY) <= radius) breakRoom(i);
+    });
+    if (state.springTime === null && oldBottom <= 273 && b.y + radius >= 273 && b.x >= 207 && b.x <= 298) {
+      state.springTime = state.time;
+      b.y = 273 - radius;
+      b.vx = 218;
+      b.vy = -370;
+      tone(170, 420, .17, .055, 'sine');
+    }
+    if (b.y + radius >= floor) {
+      b.y = floor - radius;
+      b.mode = 'ground';
+      tone(105, 48, .14, .04, 'sine');
+    }
+  }
+
+  function step(dt) {
+    state.time += dt;
+    state.frames++;
+    moveAwning(dt);
+    moveBall(dt);
+    const b = state.ball;
+    if (state.frames % 5 === 0) {
+      const last = state.trail.at(-1);
+      if (!last || Math.hypot(b.x - last.x, b.y - last.y) > 3) state.trail.push({x: b.x, y: b.y});
+    }
+    function fall(piece) {
+      if (piece.landed) return;
+      piece.vy += gravity * dt;
+      piece.x += piece.vx * dt;
+      piece.y += piece.vy * dt;
+      piece.angle += piece.turn * dt;
+      const angle = piece.angle * Math.PI / 180;
+      const bottom = Math.abs(Math.sin(angle)) * piece.halfWidth + Math.abs(Math.cos(angle)) * piece.halfHeight;
+      if (piece.y + bottom >= floor) {piece.y = floor - bottom; piece.landed = true;}
+    }
+    state.splinters.forEach(fall);
+    state.roofs.forEach(roof => {
+      if (!state.rooms[roof.support]) fall(roof);
+    });
+    const steady = (b.mode === 'ground' && Math.abs(b.vx) < 5) ||
+      (b.mode === 'shelf' && (state.attached.every(Boolean) || state.awning.y >= floor - 13));
+    state.quiet = steady ? state.quiet + dt : 0;
+    if (state.quiet > .85 || state.time > 6) state.phase = 'done';
+  }
+
+  function render() {
+    const a = state.awning, b = state.ball;
+    awningNode.setAttribute('transform', moved(a.x, a.y) + ' rotate(' + degrees(a.tilt) + ')');
+    ballNode.setAttribute('transform', moved(b.x, b.y) + ' rotate(' + degrees(b.spin) + ')');
+    roomNodes.forEach((node, i) => visibility(node, state.rooms[i]));
+    pinNodes.forEach((node, i) => visibility(node, state.attached[i]));
+    const used = state.springTime !== null;
+    const compression = used ? 8 + 5 * Math.exp(-8 * (state.time - state.springTime)) : 0;
+    topOfSpring.setAttribute('transform', moved(0, compression));
+    coils.setAttribute('transform', 'translate(0 298) scale(1 ' + (1 - compression / 24) + ') translate(0 -298)');
+    trailNode.setAttribute('points', state.trail.map(p => p.x.toFixed(1) + ',' + p.y.toFixed(1)).join(' '));
+    for (const parts of [state.splinters, state.roofs]) {
+      parts.forEach(p => p.node.setAttribute('transform', moved(p.x, p.y) + ' rotate(' + p.angle + ')'));
+    }
+    for (const ring of state.rings) {
+      const progress = Math.min(1, (state.time - ring.born) / .21);
+      ring.node.setAttribute('r', 6 + 35 * progress);
+      ring.node.setAttribute('opacity', .65 * (1 - progress));
+    }
+  }
+
+  function resultText() {
+    if (state.rooms.every(alive => !alive)) return '过关。最后两间亮窗，是招牌飞过街以后砸碎的。';
+    if (state.attached.every(pin => !pin)) return '雨棚整片平落，招牌跟着它掉进了中间的空井。';
+    if (!state.attached[0]) return '雨棚向左倾，招牌滚进了空巷。';
+    if (!state.attached[1]) return '雨棚向右倾，招牌滚向弹板。';
+    return '划线穿过的房间已经拆掉，屋顶的两个卡扣还在。';
+  }
+
+  function remember() {
+    window.openai?.setWidgetState?.({
+      modelContent: {关卡: '保龄球馆的最后一单', 已拆房间: state.rooms.filter(alive => !alive).length,
+        划掉的卡扣: ['左扣', '右扣'].filter((_, i) => !state.attached[i])},
+      privateContent: {version: 1, stroke: storedStroke}
+    })?.catch(() => {});
+  }
+
+  function animate(now) {
+    remainder += Math.min((now - lastTime) / 1000, .06);
+    lastTime = now;
+    while (remainder >= tick && state.phase === 'moving') {
+      if (state.impactPause > 0) state.impactPause -= tick;
+      else step(tick);
+      remainder -= tick;
+    }
+    render();
+    if (state.phase === 'moving') frame = requestAnimationFrame(animate);
+    else {outcome.textContent = resultText(); remember();}
+  }
+
+  function clipped(start, end, tolerance) {
+    const dx = end.x - start.x, dy = end.y - start.y;
+    const portion = Math.min(1, strokeLimit / (Math.hypot(dx, dy) || 1));
+    return {start, end: {x: start.x + dx * portion, y: start.y + dy * portion}, tolerance};
+  }
+
+  function hits(stroke) {
+    const {start, end, tolerance} = stroke;
+    const dx = end.x - start.x, dy = end.y - start.y;
+    const lengthSquared = dx * dx + dy * dy || 1;
+    const pinHits = pins.map(p => {
+      const t = between(((p.x - start.x) * dx + (p.y - start.y) * dy) / lengthSquared, 0, 1);
+      return Math.hypot(p.x - start.x - t * dx, p.y - start.y - t * dy) <= tolerance;
+    });
+    const roomHits = plan.map(room => {
+      let from = 0, to = 1;
+      for (const [p, delta, min, max] of [[start.x, dx, room.x, room.x + roomWidth], [start.y, dy, room.y, room.y + roomHeight]]) {
+        if (Math.abs(delta) < .00001) {
+          if (p < min || p > max) return false;
+          continue;
+        }
+        const first = (min - p) / delta, last = (max - p) / delta;
+        from = Math.max(from, Math.min(first, last));
+        to = Math.min(to, Math.max(first, last));
+      }
+      return from <= to;
+    });
+    return {pinHits, roomHits};
+  }
+
+  function submit(stroke, restoring = false) {
+    const {pinHits, roomHits} = hits(stroke);
+    reset();
+    if (![...pinHits, ...roomHits].some(Boolean)) {
+      outcome.textContent = '这一笔划空了，笔数保留。';
+      return;
+    }
+    storedStroke = stroke;
+    const instant = restoring || reduceMotion.matches;
+    silent = instant;
+    state.phase = 'moving';
+    state.attached = pinHits.map(hit => !hit);
+    state.trail.push({x: state.ball.x, y: state.ball.y});
+    resetButton.disabled = false;
+    score.textContent = '剩余 0 笔 · 已拆 0 / 4 间';
+    outcome.textContent = '已落笔。';
+    tone(720, 240, .07, .035, 'triangle');
+    roomHits.forEach((hit, i) => {if (hit) breakRoom(i);});
+    if (instant) {
+      while (state.phase === 'moving') step(tick);
+      render();
+      outcome.textContent = resultText();
+      silent = false;
+      if (!restoring) {tone(190, 85, .13, .045, 'triangle'); remember();}
+    } else {
+      render();
+      remainder = 0;
+      lastTime = performance.now();
+      frame = requestAnimationFrame(animate);
+    }
+  }
+
+  function pointerPosition(event) {
+    const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(world.getScreenCTM().inverse());
+    return {x: between(point.x, 0, 600), y: between(point.y, 0, 328)};
+  }
+  function preview(stroke) {
+    const {pinHits, roomHits} = hits(stroke);
+    pinNodes.forEach((node, i) => node.classList.toggle('stroke-hit', pinHits[i]));
+    roomNodes.forEach((node, i) => node.classList.toggle('stroke-hit', roomHits[i]));
+    for (const line of pencilLines) {
+      line.setAttribute('x1', stroke.start.x); line.setAttribute('y1', stroke.start.y);
+      line.setAttribute('x2', stroke.end.x); line.setAttribute('y2', stroke.end.y);
+    }
+    visibility(pencil, true);
+  }
+  svg.addEventListener('pointerdown', event => {
+    if (state.phase !== 'ready' || drag || event.button !== 0) return;
+    const tolerance = event.pointerType === 'touch' ? between(22 / world.getScreenCTM().a, 12, 42) : 12;
+    drag = {id: event.pointerId, start: pointerPosition(event), tolerance};
+    svg.setPointerCapture(event.pointerId);
+    preview(clipped(drag.start, drag.start, tolerance));
+  });
+  svg.addEventListener('pointermove', event => {
+    if (drag?.id === event.pointerId) preview(clipped(drag.start, pointerPosition(event), drag.tolerance));
+  });
+  svg.addEventListener('pointerup', event => {
+    if (drag?.id !== event.pointerId) return;
+    const stroke = clipped(drag.start, pointerPosition(event), drag.tolerance);
+    drag = null;
+    if (Math.hypot(stroke.end.x - stroke.start.x, stroke.end.y - stroke.start.y) < 3) {reset(); return;}
+    submit(stroke);
+  });
+  svg.addEventListener('lostpointercapture', event => {if (drag?.id === event.pointerId) reset();});
+  resetButton.addEventListener('click', () => {reset(); remember();});
+  root.querySelectorAll('[data-trial]').forEach(button => button.addEventListener('click', () => {
+    const option = button.dataset.trial;
+    const startX = option === 'right' ? pins[1].x : pins[0].x;
+    const endX = option === 'both' ? pins[1].x : startX;
+    submit(clipped({x: startX, y: 67}, {x: endX, y: 79}, 12));
+  }));
+
+  function applySaved(snapshot) {
+    const data = snapshot?.privateContent;
+    if (data?.version !== 1 || JSON.stringify(data.stroke) === JSON.stringify(storedStroke)) return;
+    const s = data.stroke;
+    if (s === null) {reset(); return;}
+    if (![s?.start?.x, s?.start?.y, s?.end?.x, s?.end?.y, s?.tolerance].every(Number.isFinite)) return;
+    submit(clipped(s.start, s.end, between(s.tolerance, 12, 42)), true);
+  }
+  new ResizeObserver(() => {
+    const box = svg.getBoundingClientRect();
+    if (box.width <= 0 || box.height <= 0) return;
+    svg.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
+    world.setAttribute('transform', 'scale(' + box.width / 600 + ' ' + box.height / 328 + ')');
+  }).observe(svg);
+  window.addEventListener('openai:set_globals', event => applySaved(event.detail?.globals?.widgetState));
+  reset();
+  applySaved(window.openai?.widgetState);
+})();
+</script>
